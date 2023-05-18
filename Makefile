@@ -24,7 +24,7 @@ p4iab.sif: p4iab.def p4iab.tar.gz
 run:
 	@mkdir -p "$(SHARED_DIR)"
 	@test -n "$(shell docker image ls -q p4iab)" \
-		|| (echo Cannot find image p4iab:latest, has it been built yet? \
+		|| (echo Cannot find image p4iab:latest, has it been built yet? 1>&2 \
 		&& false)
 	@"$(DOCKER)" run --rm -it --privileged -v "$(SHARED_DIR):/home/p4/shared" \
 		-e TERM -u p4 --entrypoint p4iab_docker_entry.sh p4iab:latest
@@ -32,7 +32,7 @@ run:
 sc-run:
 	@mkdir -p "$(SHARED_DIR)" "$(OVERLAY_DIR)"
 	@test -e p4iab.sif \
-		|| (echo Cannot find p4iab.sif, has it been built yet? \
+		|| (echo Cannot find p4iab.sif, has it been built yet? 1>&2 \
 		&& false)
 	@sudo singularity run --allow-setuid --overlay "$(OVERLAY_DIR)" \
 		-B "$(SHARED_DIR):/home/p4/shared" p4iab.sif
