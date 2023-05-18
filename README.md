@@ -44,11 +44,13 @@ Windows (without WSL), you're out-of-luck here and should proceed to the docker
 instructions below.
 
 To use P4-in-a-Bottle with Singularity:
+0. Clone this repository if you haven't done so already.
 1. Install singularity from [GitHub](https://github.com/sylabs/singularity/releases).
-2. Download a pre-built image `p4iab.sif` and place it in the same directory
-   as this README. If you skip this step YOU WILL BUILD BOTH THE DOCKER
-   CONTAINER AND THE SINGULARITY CONTAINER FROM SOURCE. (Trust me, you do NOT
-   want to build this yourself).
+2. Download a pre-built image
+   [p4iab.sif](https://git.inkweaver.net/inkweaver/P4-in-a-Bottle/releases)
+   and place it in the same directory alongside `README.md`. If you skip this
+   step YOU WILL BUILD BOTH THE DOCKER CONTAINER AND THE SINGULARITY CONTAINER
+   FROM SOURCE. (Trust me, you do NOT want to build this yourself).
 3. Run `make sc-run`. A shared directory `shared/` will be created to allow
    you to move files between the container and your system.
 
@@ -56,9 +58,12 @@ To use P4-in-a-Bottle with Singularity:
 
 If you are stuck with docker, don't panic! The instructions are longer but
 everything should still work.
+0. Clone this repository if you haven't done so already.
 1. Install docker on your system. This should be pretty self-explanatory.
-2. Download a pre-built image `p4iab.tar.gz` and place it in the same directory
-   as this README. Then run `docker load -i p4iab.tar.gz && touch .docker_build`.
+2. Download a pre-built image
+   [p4iab.tar.gz](https://git.inkweaver.net/inkweaver/P4-in-a-Bottle/releases)
+   and place it in the same directory alongside `README.md`. Then run
+   `docker load -i p4iab.tar.gz && touch .docker_build`.
    If you skip this step YOU WILL BUILD THE DOCKER CONTAINER FROM SOURCE. Do
    so only if you know what you are doing.
 3. Run `make run`. A shared directory `shared/` will be created to allow
