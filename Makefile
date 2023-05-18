@@ -21,13 +21,21 @@ p4iab.sif: p4iab.def p4iab.tar.gz
 	sudo "$(SINGULARITY)" build "$@" "$<"
 	sudo chown $(UID):$(GID) "$@"
 
-run: .docker_build
-	mkdir -p "$(SHARED_DIR)"
-	"$(DOCKER)" run --rm -it --privileged -v "$(SHARED_DIR):/home/p4/shared" -e TERM -u p4 --entrypoint p4iab_docker_entry.sh p4iab:latest
+run:
+	@mkdir -p "$(SHARED_DIR)"
+	@test -n "$(shell docker image ls -q p4iab)" \
+		|| (echo Cannot find image p4iab:latest, has it been built yet? \
+		&& false)
+	@"$(DOCKER)" run --rm -it --privileged -v "$(SHARED_DIR):/home/p4/shared" \
+		-e TERM -u p4 --entrypoint p4iab_docker_entry.sh p4iab:latest
 
-sc-run: p4iab.sif
-	mkdir -p "$(SHARED_DIR)" "$(OVERLAY_DIR)"
-	sudo singularity run --allow-setuid --overlay "$(OVERLAY_DIR)" -B "$(SHARED_DIR):/home/p4/shared" "$<"
+sc-run:
+	@mkdir -p "$(SHARED_DIR)" "$(OVERLAY_DIR)"
+	@test -e p4iab.sif \
+		|| (echo Cannot find p4iab.sif, has it been built yet? \
+		&& false)
+	@sudo singularity run --allow-setuid --overlay "$(OVERLAY_DIR)" \
+		-B "$(SHARED_DIR):/home/p4/shared" p4iab.sif
 
 clean:
 	"$(DOCKER)" container prune

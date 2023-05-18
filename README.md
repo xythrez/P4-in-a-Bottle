@@ -45,15 +45,11 @@ instructions below.
 
 To use P4-in-a-Bottle with Singularity:
 1. Install singularity from [GitHub](https://github.com/sylabs/singularity/releases).
-2. Clone and enter this repository.
+2. Clone and cd into this repository.
 3. Download a pre-built image
    [p4iab.sif](https://git.inkweaver.net/inkweaver/P4-in-a-Bottle/releases)
    and place it in the same directory alongside `README.md`.
-4. Run `touch .docker_build p4iab.tar.gz p4iab.sif`. This prevents make from
-   building the container from source. If you skip this step YOU WILL BUILD
-   BOTH THE DOCKER CONTAINER AND THE SINGULARITY CONTAINER FROM SOURCE. (Trust
-   me, you do NOT want to build this yourself).
-5. Run `make sc-run`. A shared directory `shared/` will be created to allow
+4. Run `make sc-run`. A shared directory `shared/` will be created to allow
    you to move files between the container and your system.
 
 ### Docker
@@ -61,14 +57,11 @@ To use P4-in-a-Bottle with Singularity:
 If you are stuck with docker, don't panic! The instructions are longer but
 everything should still work.
 1. Install docker on your system. This should be pretty self-explanatory.
-2. Clone and enter this repository.
+2. Clone and cd into this repository.
 3. Download a pre-built image
    [p4iab.tar.gz](https://git.inkweaver.net/inkweaver/P4-in-a-Bottle/releases)
-   and place it in the same directory alongside `README.md`. Then run
-   `docker load -i p4iab.tar.gz` to import the container into docker.
-4. Run `touch .docker_build`. This tricks make into skipping the docker build
-   commands. If you skip this step YOU WILL BUILD THE DOCKER CONTAINER FROM
-   SOURCE. Do so only if you know what you are doing.
+   and place it in the same directory alongside `README.md`.
+4. Run `docker load -i p4iab.tar.gz` to import the container into docker.
 5. Run `make run`. A shared directory `shared/` will be created to allow
    you to move files between the container and your system.
 
@@ -94,4 +87,7 @@ $ make p4iab.sif
 # Cleanup any cached artifacts
 $ make clean
 ```
+
+Once you have either `p4iab.tar.gz` or `p4iab.sif`, proceed to follow the
+instructions in the "How to Use" section from step 4.
 
