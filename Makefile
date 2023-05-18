@@ -1,6 +1,6 @@
 # Change this to podman if you are on RHEL8+
 DOCKER ?= docker
-SINGULARITY ?= singularity
+APPTAINER ?= apptainer
 SHARED_DIR ?= ./shared
 OVERLAY_DIR ?= ./overlay
 MAX_THREADS ?= 16
@@ -18,7 +18,7 @@ p4iab.tar.gz: .docker_build
 	"$(DOCKER)" save p4iab:latest | gzip > "$@"
 
 p4iab.sif: p4iab.def p4iab.tar.gz
-	sudo "$(SINGULARITY)" build "$@" "$<"
+	sudo "$(APPTAINER)" build "$@" "$<"
 	sudo chown $(UID):$(GID) "$@"
 
 run:
@@ -29,12 +29,12 @@ run:
 	@"$(DOCKER)" run --rm -it --privileged -v "$(SHARED_DIR):/home/p4/shared" \
 		-e TERM -u p4 --entrypoint p4iab_docker_entry.sh p4iab:latest
 
-sc-run:
+app-run:
 	@mkdir -p "$(SHARED_DIR)" "$(OVERLAY_DIR)"
 	@test -e p4iab.sif \
 		|| (echo Cannot find p4iab.sif, has it been built yet? 1>&2 \
 		&& false)
-	@sudo singularity run --allow-setuid --overlay "$(OVERLAY_DIR)" \
+	@sudo $(APPTAINER) run --allow-setuid --overlay "$(OVERLAY_DIR)" \
 		-B "$(SHARED_DIR):/home/p4/shared" p4iab.sif
 
 clean:
