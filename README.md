@@ -27,6 +27,19 @@ this container also has a few other advantages:
 5. When converted into a Apptainer SIF, it can be launched as a single binary
    executable.
 
+User Tools
+----------
+
+The containers are built with several additional user tools already in place,
+including but not limited to:
+
+1. `vim`/`emacs`: text editing.
+2. `git`: version control.
+3. `tmux`: terminal multiplexing.
+3. `tshark`/`termshark`/`tcpdump`: packets inspection.
+4. `htop`: visual overview of processes.
+5. `man`/`less`: documentation support.
+
 How to Use
 ----------
 
@@ -34,9 +47,9 @@ There are two ways of launching P4-in-a-Bottle:
 
 ### Apptainer
 
-Apptainer is a container runtime by Sylabs developed specificly for software
-that require low-level access to hardware (i.e. NVIDIA drivers, network
-devices). This is great for P4-in-a-Bottle, since Mininet requires access to
+Apptainer is a new container runtime developed specificly for software that
+require low-level access to hardware (i.e. NVIDIA drivers, network devices,
+etc). This is great for P4-in-a-Bottle, since Mininet requires access to
 networking kernel components to work.
 
 Unfortunately, Apptainer only works natively on Linux, so if you're on Mac or
@@ -54,8 +67,8 @@ To use P4-in-a-Bottle with Apptainer:
 
 ### Docker
 
-If you are stuck with docker, don't panic! The instructions are longer but
-everything should still work.
+If you are stuck with docker, don't panic! The instructions are slightly more
+complicated but everything should still work.
 1. Install docker on your system. This should be pretty self-explanatory.
 2. Clone and cd into this repository.
 3. Download a pre-built image
@@ -64,6 +77,9 @@ everything should still work.
 4. Run `docker load -i p4iab.tar.gz` to import the container into docker.
 5. Run `make run`. A shared directory `shared/` will be created to allow
    you to move files between the container and your system.
+
+Regardless of which method you run the container, you will be dropped into a
+shell with the user P4. The password for the P4 user account is simply `p4`.
 
 
 Building from Source

@@ -17,7 +17,7 @@ GID := $(shell id -g)
 p4iab.tar.gz: .docker_build
 	"$(DOCKER)" save p4iab:latest | gzip > "$@"
 
-p4iab.sif: p4iab.def p4iab.tar.gz
+p4iab.sif: p4iab.def .docker_build
 	sudo "$(APPTAINER)" build "$@" "$<"
 	sudo chown $(UID):$(GID) "$@"
 

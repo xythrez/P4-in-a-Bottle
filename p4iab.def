@@ -1,5 +1,5 @@
-BootStrap: docker-archive
-From: p4iab.tar.gz
+BootStrap: docker-daemon
+From: p4iab:latest
 
 %files
     scripts/p4iab_singularity_entry.sh /usr/bin/p4iab_singularity_entry.sh
