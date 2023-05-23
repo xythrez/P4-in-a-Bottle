@@ -34,6 +34,7 @@ app-run:
 	@test -e p4iab.sif \
 		|| (echo Cannot find p4iab.sif, has it been built yet? 1>&2 \
 		&& false)
+	@lsmod | grep overlay > /dev/null || sudo modprobe overlay
 	@sudo $(APPTAINER) run --allow-setuid --overlay "$(OVERLAY_DIR)" \
 		-B "$(SHARED_DIR):/home/p4/shared" p4iab.sif
 
